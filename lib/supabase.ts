@@ -13,6 +13,7 @@ export type Story = {
   problem: string
   story_text: string
   image_url: string | null
+  image_urls: string[] | null
   is_favourite: boolean
   created_at: string
 }

@@ -60,47 +60,50 @@ export default async function StoryPage({
           {isMax ? "Max's Story 🦁" : "Lila's Story 🦋"}
         </h1>
 
-        {/* Illustration */}
-        {story.image_url && (
-          <div className="rounded-3xl overflow-hidden mb-8 shadow-2xl">
-            <Image
-              src={story.image_url}
-              alt={`Illustration for ${isMax ? "Max" : "Lila"}'s story`}
-              width={1024}
-              height={1024}
-              className="w-full"
-              priority
-            />
-          </div>
-        )}
-
-        {/* Story text */}
+        {/* Story text with inline images */}
         <div
           className="rounded-3xl p-6 mb-8"
           style={{ background: "rgba(48,43,99,0.5)", border: "1px solid rgba(255,215,0,0.15)" }}
         >
-          {paragraphs.map((para, i) => (
-            <div key={i}>
-              <p
-                style={{
-                  fontSize: "20px",
-                  lineHeight: "1.8",
-                  color: "#f0f0f0",
-                  marginBottom: "1rem",
-                }}
-              >
-                {para}
-              </p>
-              {i < paragraphs.length - 1 && (
-                <div
-                  className="text-center text-2xl my-2"
-                  style={{ color: "#ffd700", opacity: 0.5 }}
+          {paragraphs.map((para, i) => {
+            const imgSrc = story.image_urls?.[i] ?? (i === 0 ? story.image_url : null);
+            return (
+              <div key={i}>
+                {imgSrc && (
+                  <div className="flex justify-center mb-4">
+                    <div className="rounded-2xl overflow-hidden shadow-xl" style={{ maxWidth: "400px", width: "100%" }}>
+                      <Image
+                        src={imgSrc}
+                        alt={`Scene ${i + 1}`}
+                        width={400}
+                        height={400}
+                        className="w-full"
+                        priority={i === 0}
+                      />
+                    </div>
+                  </div>
+                )}
+                <p
+                  style={{
+                    fontSize: "20px",
+                    lineHeight: "1.8",
+                    color: "#f0f0f0",
+                    marginBottom: "1rem",
+                  }}
                 >
-                  ✦
-                </div>
-              )}
-            </div>
-          ))}
+                  {para}
+                </p>
+                {i < paragraphs.length - 1 && (
+                  <div
+                    className="text-center text-2xl my-2"
+                    style={{ color: "#ffd700", opacity: 0.5 }}
+                  >
+                    ✦
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
 
         {/* Action buttons */}

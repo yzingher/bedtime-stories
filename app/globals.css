@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-deep: #0f0c29;
+  --color-accent: #302b63;
+  --color-star-gold: #ffd700;
+  --color-text-primary: #f0f0f0;
+  --color-max: #f97316;
+  --color-lila: #a855f7;
+}
+
+body {
+  background: #0f0c29;
+  color: #f0f0f0;
+  font-family: var(--font-nunito), 'Nunito', sans-serif;
+}
+
+html, body {
+  height: 100%;
+}

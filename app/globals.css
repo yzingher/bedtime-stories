@@ -42,3 +42,13 @@ html, body {
   background: #ffd700;
   animation: twinkle-slow 5s ease-in-out infinite;
 }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.moon-glow {
+  animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(255, 215, 0, 0.5));
+}

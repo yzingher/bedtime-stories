@@ -298,7 +298,7 @@ Use these in every image generation prompt to ensure Max and Lila look consisten
 
 > Comment on these in GitHub:
 
-1. **Image storage:** OpenAI DALL-E URLs expire after 1h. Should we (a) save image to Supabase Storage, or (b) regenerate on demand? Option A is cleaner — adds a step in Milestone 4.
+1. **Image storage:** ✅ Decided — save to Supabase Storage bucket `story-images`. Download from DALL-E URL, upload to Supabase, store permanent public URL in `image_url` column.
 2. **Voice:** `nova` (warm female) or `alloy` (neutral)? Defaulting to `nova`.
 3. **Security:** Currently open — anyone with the URL sees all stories. Fine for now?
 4. **Story length:** 5 paragraphs / ~350 words ≈ 3-4 min read. Right for bedtime?

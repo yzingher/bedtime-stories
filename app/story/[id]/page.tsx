@@ -3,6 +3,7 @@ import { Story } from "@/lib/supabase";
 import Image from "next/image";
 import Link from "next/link";
 import FavouriteButton from "./FavouriteButton";
+import ReadAloudButton from "./ReadAloudButton";
 
 export default async function StoryPage({
   params,
@@ -109,19 +110,7 @@ export default async function StoryPage({
             initialIsFavourite={story.is_favourite}
           />
 
-          <button
-            disabled
-            className="rounded-3xl font-bold text-xl w-full"
-            style={{
-              background: "rgba(48,43,99,0.5)",
-              border: "2px solid rgba(255,255,255,0.12)",
-              color: "rgba(240,240,240,0.4)",
-              minHeight: "64px",
-              cursor: "not-allowed",
-            }}
-          >
-            🔊 Read Aloud (coming soon)
-          </button>
+          <ReadAloudButton storyId={story.id} />
 
           <Link
             href="/"

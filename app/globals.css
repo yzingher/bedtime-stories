@@ -18,3 +18,27 @@ body {
 html, body {
   height: 100%;
 }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(0.4); }
+}
+
+@keyframes twinkle-slow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 0.05; transform: scale(0.3); }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.star-slow {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffd700;
+  animation: twinkle-slow 5s ease-in-out infinite;
+}

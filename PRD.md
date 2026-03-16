@@ -96,6 +96,7 @@ create table stories (
   place text not null,
   problem text not null,
   story_text text not null,
+  image_url text,
   is_favourite boolean default false,
   created_at timestamptz default now()
 );
@@ -214,7 +215,7 @@ npm run dev     # open localhost:3000, see title text on dark background with Nu
   - Fetch story from Supabase by ID
   - Large readable text (Nunito, min 20px, 1.8 line height)
   - Story split into paragraphs, each with a decorative star divider
-  - One thematic Picsum image at the top: `https://picsum.photos/seed/{place}/600/300`
+  - One DALL-E illustration at the top, generated using the character descriptions + place/problem as scene context. Store image URL in the `stories` table (`image_url` column).
   - Player name shown: "Max's Story 🦁" or "Lila's Story 🦋"
   - ⭐ Favourite button (toggles `is_favourite` in Supabase)
   - 🔄 New Story button (back to home)
@@ -265,10 +266,26 @@ npm run dev     # open localhost:3000, see title text on dark background with Nu
 
 ---
 
+## Character Descriptions (for DALL-E)
+
+Use these in every image generation prompt to ensure Max and Lila look consistent across all stories.
+
+**Max:** Young boy, ~4-5 years old. Light brown/chestnut hair, slightly tousled, parted to one side. Large expressive dark brown eyes, mischievous cheeky smile. Round face, fair skin, slim build. Black hoodie and jeans. Confident, playful energy.
+
+**Lila:** Young girl, ~3-4 years old. Dark brown curly/wavy hair in two pigtail buns with pink hair tie. Big round dark brown eyes with long lashes, sweet slightly shy smile showing baby teeth. Round cherubic face, fair skin, petite build. Pink cardigan. Warm, curious, gentle expression.
+
+**Base DALL-E prompt for both:**
+> "Twin siblings, boy and girl, around 4 years old. The boy has lighter brown straight hair and a cheeky grin; the girl has darker brown curly hair in pigtail buns and a sweet smile. Both have large dark brown eyes and fair skin. Cartoon/illustrated style, warm and friendly, suitable for a children's storybook. Scene: {scene_description}."
+
+**Image generation:** One illustration per story, generated with `dall-e-3`, size `1024x1024`, quality `standard`. Store the URL returned by OpenAI (URLs expire after 1 hour — download and store in Supabase Storage, or store the generated image as base64).
+
+**Cost:** ~$0.04 per story image. Totally worth it.
+
+---
+
 ## Out of Scope (v1)
 
 - User authentication / multi-family
-- AI-generated images (DALL-E) — using Picsum for now
 - Custom character names
 - Story editing
 - Push notifications
@@ -281,7 +298,7 @@ npm run dev     # open localhost:3000, see title text on dark background with Nu
 
 > Comment on these in GitHub:
 
-1. **DALL-E images?** Picsum is free and instant. DALL-E ~$0.04/image would generate a matching illustration for each story. Worth it for the magic factor?
-2. **Voice:** `nova` (warm female) or `alloy` (neutral)? Should Dad be able to pick?
+1. **Image storage:** OpenAI DALL-E URLs expire after 1h. Should we (a) save image to Supabase Storage, or (b) regenerate on demand? Option A is cleaner — adds a step in Milestone 4.
+2. **Voice:** `nova` (warm female) or `alloy` (neutral)? Defaulting to `nova`.
 3. **Security:** Currently open — anyone with the URL sees all stories. Fine for now?
 4. **Story length:** 5 paragraphs / ~350 words ≈ 3-4 min read. Right for bedtime?
